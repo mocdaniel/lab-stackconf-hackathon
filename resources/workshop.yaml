@@ -18,21 +18,9 @@ spec:
   session:
     objects:
       - apiVersion: rbac.authorization.k8s.io/v1
-        kind: ClusterRole
-        metadata:
-          name: ingressclass-viewer
-        rules:
-          - apiGroups:
-              - networking.k8s.io
-            resources:
-              - ingressclasses
-            verbs:
-              - get
-              - list
-      - apiVersion: rbac.authorization.k8s.io/v1
         kind: ClusterRoleBinding
         metadata:
-          name: ingressclass-viewer-binding
+          name: ingressclass-viewer-$(workshop_namespace)-$(service-account)
         roleRef:
           apiGroup: rbac.authorization.k8s.io
           kind: ClusterRole
