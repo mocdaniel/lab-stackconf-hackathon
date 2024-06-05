@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title></title>
+    <link>http://localhost:1313/workshop/content/</link>
+    <description>Recent content on </description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <atom:link href="http://localhost:1313/workshop/content/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>NWS@StackConf Hackathon</title>
+      <link>http://localhost:1313/workshop/content/00-workshop-overview/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/workshop/content/00-workshop-overview/</guid>
+      <description>Briefing You&amp;rsquo;re the newest addition to the NWS team and are tasked with bringing up the NWS@StackConf website, which will run on top of Kubernetes.&#xA;In your terminal, you&amp;rsquo;ve got admin privileges within your namespace to fulfill this task, meaning that you can edit and create pretty much anything within the already configured context using kubectl.&#xA;Because this is a production cluster, Kyverno is in place to enforce certain policies - unfortunately, the team wasn&amp;rsquo;t able to tell you which exactly from the top of their heads.</description>
+    </item>
+  </channel>
+</rss>

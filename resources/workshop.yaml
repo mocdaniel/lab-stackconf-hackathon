@@ -1,0 +1,97 @@
+apiVersion: training.educates.dev/v1beta1
+kind: Workshop
+metadata:
+  name: "lab-stackconf-hackathon"
+spec:
+  title: "NWS@StackConf Hackathon"
+  description: "Test your Kubernetes knowledge and win awesome prizes by repairing our StackConf deployment!"
+  publish:
+    image: "$(image_repository)/lab-stackconf-hackathon-files:$(workshop_version)"
+  workshop:
+    files:
+      - image:
+          url: "$(image_repository)/lab-stackconf-hackathon-files:$(workshop_version)"
+        includePaths:
+          - /workshop/**
+          - /exercises/**
+          - /README.md
+  session:
+    objects:
+      - apiVersion: rbac.authorization.k8s.io/v1
+        kind: ClusterRole
+        metadata:
+          name: ingressclass-viewer
+        rules:
+          - apiGroups:
+              - networking.k8s.io
+            resources:
+              - ingressclasses
+            verbs:
+              - get
+              - list
+      - apiVersion: rbac.authorization.k8s.io/v1
+        kind: ClusterRoleBinding
+        metadata:
+          name: ingressclass-viewer-binding
+        roleRef:
+          apiGroup: rbac.authorization.k8s.io
+          kind: ClusterRole
+          name: ingressclass-viewer
+        subjects:
+          - kind: ServiceAccount
+            namespace: $(workshop_namespace)
+            name: $(service_account)
+      - apiVersion: v1
+        kind: Secret
+        metadata:
+          name: stackconf-image-registry
+        type: kubernetes.io/dockerconfigjson
+        data:
+          .dockerconfigjson: eyJhdXRocyI6eyJyZWdpc3RyeS5uZXR3YXlzLmRlIjp7InVzZXJuYW1lIjoic3RhY2tjb25mIiwicGFzc3dvcmQiOiJnbGR0LUN3TEhKYnVwVDEzaFdEb1hwTHlmIiwiYXV0aCI6ImMzUmhZMnRqYjI1bU9tZHNaSFF0UTNkTVNFcGlkWEJVTVROb1YwUnZXSEJNZVdZPSJ9fX0=
+      - apiVersion: v1
+        kind: Service
+        metadata:
+          name: nws-at-stackconf
+        spec:
+          type: ClusterIP
+          ports:
+            - port: 80
+              targetPort: 8080
+              name: http
+          selector:
+            app: nws-at-stackonf
+      - apiVersion: networking.k8s.io/v1
+        kind: Ingress
+        metadata:
+          name: nws-at-stackconf
+        spec:
+          ingressClassName: nginx
+          rules:
+            - host: stackconf-$(session_name).$(ingress_domain)
+              http:
+                paths:
+                  - backend:
+                      service:
+                        name: nws-at-stackconf
+                        port:
+                          name: http
+                    path: /
+                    pathType: Prefix
+          tls:
+            - hosts:
+                - stackconf-$(session_name).$(ingress_domain)
+    namespaces:
+      budget: custom
+    applications:
+      terminal:
+        enabled: true
+      editor:
+        enabled: false
+      console:
+        enabled: false
+      docker:
+        enabled: false
+      registry:
+        enabled: false
+      vcluster:
+        enabled: false
