@@ -1,10 +1,10 @@
 ---
-title: NWS@StackConf Hackathon
+title: NWS@stackconf Hackathon
 ---
 
 ## Briefing
 
-You're the newest addition to the NWS team and are tasked with bringing up the _NWS@StackConf_ website,
+You're the newest addition to the NWS team and are tasked with bringing up the _NWS@stackconf_ website,
 which will run on top of Kubernetes.
 
 In your terminal, you've got **admin privileges within your namespace** to fulfill this task,
